@@ -2,7 +2,7 @@
 
 Приложение связывает личный Codex или Claude Code с интервьюером на доске StaffEngineer. Для работы нужен Mac с Homebrew и установленный агент, в котором вы вошли в свой аккаунт.
 
-    brew install tgerasimov093-design/staffengineer/interview
+    brew install tgerasimov093-design/staffengineer/interview && staffengineer-register
 
 Откройте [доску](https://staffengineer.ru/systemdesign/mcp), нажмите «Мой ИИ» и выберите агента. Если браузер запросит разрешение открыть приложение или подключиться к устройству, подтвердите. После подключения задавайте вопросы на доске. Терминал можно закрыть.
 

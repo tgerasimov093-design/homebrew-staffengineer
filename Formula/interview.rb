@@ -1,9 +1,9 @@
 class Interview < Formula
   desc "Connect your local Codex or Claude Code to the StaffEngineer interview board"
   homepage "https://staffengineer.ru/systemdesign/mcp"
-  url "file://#{File.expand_path("../packages/interview-0.1.0.tar.gz", __dir__)}"
-  version "0.1.0"
-  sha256 "a0d4e080763e2d19f508d6b1cd900be1c65d5a25fe537b1835676b0c3bb25171"
+  url "file://#{File.expand_path("../packages/interview-0.1.1.tar.gz", __dir__)}"
+  version "0.1.1"
+  sha256 "bcd655dbec761b98d8567462891f60e420cf16739ee76a23d9ac6c57649a63ea"
 
   depends_on :macos
   on_macos do
@@ -30,11 +30,14 @@ class Interview < Formula
     contents.install "Info.plist"
     system "/usr/bin/xcrun", "swiftc", "-O", "main.swift", "-o", contents/"MacOS/StaffEngineer"
     system "/usr/bin/codesign", "--force", "--sign", "-", contents.parent
+    (bin/"staffengineer-register").write <<~SH
+      #!/bin/sh
+      exec "#{opt_libexec}/StaffEngineer Interview.app/Contents/MacOS/StaffEngineer" --register
+    SH
   end
 
-  def post_install
-    system "/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister",
-           "-f", opt_libexec/"StaffEngineer Interview.app"
+  def caveats
+    "To enable the connection buttons in your browser, run: staffengineer-register"
   end
 
   test do

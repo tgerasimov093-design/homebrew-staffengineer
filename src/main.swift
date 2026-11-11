@@ -1,4 +1,19 @@
 import AppKit
+import CoreServices
+
+// Registration must run in the logged-in GUI session. Homebrew isolates post_install.
+if CommandLine.arguments.dropFirst() == ["--register"] {
+    let appURL = Bundle.main.bundleURL.resolvingSymlinksInPath()
+    let link = URL(string: "staffengineer-interview://connect")!
+    let status = LSRegisterURL(appURL as CFURL, true)
+    let handler = NSWorkspace.shared.urlForApplication(toOpen: link)
+    guard status == noErr, handler?.resolvingSymlinksInPath() == appURL else {
+        FileHandle.standardError.write(Data("Не удалось зарегистрировать приложение в macOS. Повторите staffengineer-register после входа в свой профиль Mac.\n".utf8))
+        exit(EXIT_FAILURE)
+    }
+    print("Готово. На доске нажмите «Подключить Codex» или «Подключить Claude Code».")
+    exit(EXIT_SUCCESS)
+}
 
 final class Connector: NSObject, NSApplicationDelegate {
     private var worker: Process?
