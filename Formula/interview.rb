@@ -3,10 +3,12 @@ class Interview < Formula
   homepage "https://staffengineer.ru/systemdesign/mcp"
   url "file://#{File.expand_path("../packages/interview-0.1.0.tar.gz", __dir__)}"
   version "0.1.0"
-  sha256 "08400f67f3706e18519d968d9dd82b6c5f902e995187c2a701f18ff338a6fa53"
+  sha256 "a0d4e080763e2d19f508d6b1cd900be1c65d5a25fe537b1835676b0c3bb25171"
 
   depends_on :macos
-  depends_on macos: :ventura
+  on_macos do
+    depends_on macos: :ventura
+  end
 
   resource "runtime" do
     if Hardware::CPU.arm?
